@@ -5,6 +5,7 @@ import '../filters/index'
 // import '@/mockData/index';  //导入mockData 模块
 import '@common/vant/index';
 import '@common/utils/fastclick';
+import '@common/native'
 
 import Vue from 'vue'
 import App from '@/App'
