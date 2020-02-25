@@ -7,6 +7,7 @@ const loanApplication = (resolve) => {import('@/pages/common/loanApplication').t
 const submitSuccess = (resolve) => {import('@/pages/common/submitSuccess').then((module) => {resolve(module)})}; //提交成功
 const auditFail = (resolve) => {import('@/pages/common/auditFail/index').then((module) => {resolve(module)})}; //审核失败
 const auditSuccess = (resolve) => {import('@/pages/common/auditSuccess/index').then((module) => {resolve(module)})}; //审核成功
+const identityAuthentication = (resolve) => {import('@common/components/identityAuthentication/index').then((module) => {resolve(module)})}; //审核成功
 
 Vue.use(Router);
 
@@ -25,6 +26,7 @@ let router = new Router({
     {path: '/submit-success', name: 'submitSuccess', component: submitSuccess, meta: {title: '提交成功', index: 1}},
     {path: '/audit-success', name: 'auditSuccess', component: auditSuccess, meta: {title: '审核成功', index: 1}},
     {path: '/audit-fail', name: 'auditFail', component: auditFail, meta: {title: '审核失败', index: 1}},
+    {path: '/test', name: 'identityAuthentication', component: identityAuthentication, meta: {title: '审核失败', index: 1}},
     // {
     //   path: '/index', name: 'index', component: index, redirect: '/index/home', meta: {index: 1,keepAlive:true},
     //   children: [

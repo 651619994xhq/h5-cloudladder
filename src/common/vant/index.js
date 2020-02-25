@@ -25,7 +25,7 @@ Vue.prototype.$loading = (param)=>{
     Toast.loading({duration: 0,forbidClick: true,message: "加载中..."});
     return;
   };
-  Toast.loading(param);
+  Toast.loading({...param,duration: 0,forbidClick: true});
 };
 Vue.prototype.$clear=Toast.clear;
 Vue.prototype.$dialog=Dialog;

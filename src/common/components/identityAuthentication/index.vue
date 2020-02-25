@@ -40,7 +40,7 @@
       <div class="hint-container row flex-item flex-justify">
         <div class="hint-item col flex-item flex-justify-start" @click="handleClickPhoto('hand')">
           <div class="hint-top" v-if="!identityInfo.idHandBase64">
-            <img src="@image/idCard/idPicture@3x.png" alt="">
+            <img src="" alt="">
           </div>
           <div class="hint-top" v-else>
             <img :src="identityInfo.idHandBase64" alt="">
@@ -59,14 +59,14 @@
             <div class="flex-grow">身份证有效期开始时间</div>
             <div class="t-right" @click="handleTime('startTime')">
               <span style="margin-right: 5px">{{start||'请选择'}}</span>
-              <i class="icon-arrow-right-copy iconfont left-icon"></i>
+              <i class="icon-youjiantou iconfont left-icon"></i>
             </div>
           </li>
           <li class="flex equipment-term">
             <div class="flex-grow">身份证有效期结束时间</div>
             <div class="t-right" @click="handleTime('endTime')">
               <span style="margin-right: 5px">{{end||'请选择'}}</span>
-              <i class="icon-arrow-right-copy iconfont left-icon"></i>
+              <i class="icon-youjiantou iconfont left-icon"></i>
             </div>
           </li>
           <li class="flex equipment-term">
@@ -154,15 +154,14 @@
                     this.$toast(`文件过大,请重新上传`);
                     return;
                 };
-                this.$indicator.open({
-                    text: `上传中...`,
-                    spinnerType: 'fading-circle'
+                this.$loading({
+                    message:'上传中'
                 });
                 let that=this;
                 let reader =new FileReader();
                 reader.readAsDataURL(file);//转化二进制流，异步方法
                 reader.onload =function(){
-                    that.$nextTick(()=>{that.$indicator.close()});
+                    that.$clear();
                     if(that.currentPhotoType=='front'){
                         that.identityInfo.idFrontBase64=this.result;
                         return;
