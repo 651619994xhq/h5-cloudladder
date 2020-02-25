@@ -2,7 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store/index'
 
-const error = (resolve) => {import('@/pages/error/index').then((module) => {resolve(module)})};
+const error = (resolve) => {import('@/pages/error/index').then((module) => {resolve(module)})}; //错误
+const loanApplication = (resolve) => {import('@/pages/common/loanApplication').then((module) => {resolve(module)})}; //申请页面
+const submitSuccess = (resolve) => {import('@/pages/common/submitSuccess').then((module) => {resolve(module)})}; //提交成功
+const auditFail = (resolve) => {import('@/pages/common/auditFail/index').then((module) => {resolve(module)})}; //审核失败
+const auditSuccess = (resolve) => {import('@/pages/common/auditSuccess/index').then((module) => {resolve(module)})}; //审核成功
 
 Vue.use(Router);
 
@@ -16,7 +20,11 @@ let router = new Router({
     }
   },
   routes: [
-    {path: '/error', name: 'error', component: error, meta: {title: '暂无数据', index: 2}},
+    {path: '/error', name: 'error', component: error, meta: {title: '暂无数据', index: 1}},
+    {path: '/loan-application', name: 'loanApplication', component: loanApplication, meta: {title: '借款申请', index: 1}},
+    {path: '/submit-success', name: 'submitSuccess', component: submitSuccess, meta: {title: '提交成功', index: 1}},
+    {path: '/audit-success', name: 'auditSuccess', component: auditSuccess, meta: {title: '审核成功', index: 1}},
+    {path: '/audit-fail', name: 'auditFail', component: auditFail, meta: {title: '审核失败', index: 1}},
     // {
     //   path: '/index', name: 'index', component: index, redirect: '/index/home', meta: {index: 1,keepAlive:true},
     //   children: [

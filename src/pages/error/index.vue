@@ -1,6 +1,6 @@
 <template>
   <div class="no-data text-center">
-    <NavHeader :mainTitle="NavHeader.title" :selfBack="true"></NavHeader>
+    <NavHeader :title="NavHeader.title" :selfBack="true"></NavHeader>
     {{title}}
   </div>
 </template>

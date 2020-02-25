@@ -3,19 +3,19 @@
   <div class="header">
     <header class="header-title-wrapper" :class="hasLine ? 'has-line' : ''">
       <i class="back-icon icon-fanhui iconfont" @click="back" v-if="showBackIcon"></i>
-      <h4 class="header-title">{{mainTitle}}</h4>
+      <h4 class="header-title">{{title}}</h4>
     </header>
   </div>
 </template>
 <script>
     export default {
-        name: 'mainTitle',
+        name: 'navHeader',
         // 组件
         components: {
 
         },
         props: {
-            mainTitle: {
+            title: {
                 type: String,
                 default: '标题'
             },
