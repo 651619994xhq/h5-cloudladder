@@ -8,7 +8,7 @@
       </div>
       <p class="title1">实时审核排队中</p>
       <div class="row flex-item flex-justify wait">
-        <div class="people row">还有<span style="color: #0A81FB;vertical-align: middle">3</span></div>
+        <div class="people row">还有<span style="color: #0A81FB;vertical-align: middle">3</span>人</div>
         <div class="hairline"></div>
         <div class="time">预计5分钟</div>
       </div>
@@ -120,7 +120,7 @@
         font-stretch: normal;
         line-height: 38px;
         letter-spacing: 0px;
-        color: #333333;
+        color: #666666;
       }
     }
 
