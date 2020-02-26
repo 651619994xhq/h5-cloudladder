@@ -22,7 +22,7 @@
              获取验证码
            </div>
           <div class="dis-code" v-else>
-            60s
+            {{count}}s
           </div>
         </div>
 
@@ -43,29 +43,53 @@
         },
         data() {
             return {
-                isGetCode:false
+                isGetCode:false,
+                count:60,
+                timer:null,
             }
         },
         created() {
 
         },
+        destroyed(){
+          this.clearTimer();
+        },
         methods: {
             handleCancelEvent(){
+                this.clearTimer();
                 this.$emit('cancelEvent')
             },
-            handleSureEvent(){
-                window.location.href = 'tel://010-87777985';
-                // this.$emit('sureEvent');
-
-            },
             handleCloseEvent(){
+                this.clearTimer();
                 this.$emit('closeEvent')
             },
             handleInput(value){
+                this.clearTimer();
                 this.$emit('closeEvent')
             },
             handleGetCodeEvent(){
                 this.isGetCode=true;
+                this.startTimer(()=>{
+                    this.isGetCode=false;
+                });
+            },
+            //开始定时器
+            startTimer(cb){
+                this.timer=setInterval(()=>{
+                    this.count-=1;
+                    if(this.count==0){
+                        this.clearTimer();
+                        cb&&cb();
+                    }
+                },1000)
+            },
+            //清理定时器
+            clearTimer(){
+                if(this.timer){
+                    clearInterval(this.timer);
+                };
+                this.count=60;
+
             }
 
         },
