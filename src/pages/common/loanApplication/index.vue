@@ -31,6 +31,14 @@
         请补充<i class="icon-youjiantou iconfont"></i>
 
       </div>
+      <div class="cardName flex flex-item flex-justify">
+        申请验证
+      </div>
+      <div class="no-perfect-Info perfect-info" style="position: relative;
+            ">
+        请确认<i class="icon-youjiantou iconfont"></i>
+
+      </div>
     </div>
     <div style="margin-top: 10px">
       <span class="meet-a-problem">申请遇到问题？</span>
