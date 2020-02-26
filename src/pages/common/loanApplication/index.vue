@@ -16,8 +16,8 @@
       <div class="cardName flex flex-item flex-justify">
         银行卡验证
       </div>
-      <div class="no-perfect-Info perfect-info" style="position: relative;
-            ">
+      <div class="no-perfect-Info perfect-info" style="position: relative;" @click="handleSelectBankEvent">
+
        请选择<i class="icon-youjiantou iconfont"></i>
 
       </div>
@@ -38,22 +38,31 @@
     <div class="submit-btn">
       <span>提交借款申请</span>
     </div>
-
+    <BankPicker :isShow="BankPicker.isShow" :columns="BankPicker.columns" @onCancel="BankPicker.onCancel"></BankPicker>
   </div>
 </template>
 <script>
     import NavHeader from '@/common/components/navHeader/index'  //导入公共的title
+    import BankPicker from '@/components/bankPicker/index'
     export default {
         name: 'loanApplication',
         components: {
             NavHeader,
+            BankPicker
         },
         data() {
             return {
                 NavHeader: {
                     title: '借款申请'
                 },
-                loan_channel: '推荐至 平安任意门',
+                loan_channel: '推荐至 ',
+                BankPicker:{
+                    isShow:false,
+                    columns:['杭州', '宁波', '温州', '嘉兴', '湖州'],
+                    onCancel:()=>{
+                        this.BankPicker.isShow=false;
+                    }
+                }
             }
         },
         methods: {
@@ -63,6 +72,10 @@
             handleIssueEvent(){
 
             },
+            handleSelectBankEvent(){
+                this.BankPicker.isShow=true;
+
+            }
         },
         created() {
 
