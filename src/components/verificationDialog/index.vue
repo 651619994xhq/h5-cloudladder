@@ -9,7 +9,7 @@
           验证手机
         </div>
         <div class="mobile">
-          186****4016
+          {{mobile | noPassByMobile}}
         </div>
       </div>
       <div class="code-box row flex-justify-between flex-item">
@@ -25,7 +25,9 @@
             {{count}}s
           </div>
         </div>
-
+      </div>
+      <div class="submit-verification" @click="handleSubmitEvent">
+        提交验证
       </div>
 
     </div>
@@ -46,6 +48,7 @@
                 isGetCode:false,
                 count:60,
                 timer:null,
+                mobile:18614084016
             }
         },
         created() {
@@ -90,6 +93,9 @@
                 };
                 this.count=60;
 
+            },
+            handleSubmitEvent(){
+                this.$toast('正在提交中');
             }
 
         },
@@ -98,8 +104,8 @@
 
 <style scoped lang="scss">
   .verification-pop{
-    width: 520px;
-    height: 340px;
+    width: 540px;
+    height: 380px;
     position: relative;
     overflow: hidden;
     .close-btn{
@@ -155,6 +161,21 @@
         }
       }
     }
+  }
+  .submit-verification{
+    margin: 30px auto;
+    width: 400px;
+    height: 80px;
+    line-height: 80px;
+    background-color: #0a81fb;
+    border-radius: 40px;
+    text-align: center;
+    color: #ffffff;
+    font-family: PingFang-SC-Medium;
+    font-size: 32px;
+    font-weight: bold;
+    font-stretch: normal;
+    letter-spacing: 0px;
   }
 
 </style>

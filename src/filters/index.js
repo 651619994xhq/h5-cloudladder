@@ -1,66 +1,55 @@
-import {INTERVIEW_TYPE,WORK_TYPE,ORDER_STATUS,IDENTITY_TYPE,SERVICE_TYPE,WORK_STATUS,ORDER_DETAIL_STATUS,SELECT_SERVICE_TYPE} from '../common/utils/constants';
-import Vue from 'vue';
-Vue.filter('INTERVIEW_TYPE_FILTER',function (value) {
-   for(let i=0,len=INTERVIEW_TYPE.length;i<len;i++){
-     if(value==INTERVIEW_TYPE[i]['id']){
-       return INTERVIEW_TYPE[i]['name']
-     };
-   };
-   return '';
-});
-Vue.filter('WORK_TYPE_FILTER',function (value) {
-  for(let i=0,len=WORK_TYPE.length;i<len;i++){
-    if(value==WORK_TYPE[i]['id']){
-      return WORK_TYPE[i]['name']
-    };
+import Vue from 'vue'
+// import {ORDER_STATE,COOPERATION_WAY,REPAY_TYPE,LOAN_STATE,REPAY_STATE,AUDIT_STATE,MAKE_LOAN_STATE,REPAY_PERIOD,GUARANTY_TYPE,TRANSACTION_STATUS,LOAN_TYPE} from 'utils/constants';
+//格式化时间戳
+Vue.filter('dateTimeFormat',(value)=>{
+  if(!value){
+    return '';
   };
-  return '';
+  var time = new Date(+value);
+  var rightTwo = (v) => {v = '0' + v;
+    return v.substring(v.length - 2, v.length)
+  }
+  if (time == null) return;
+  var year = time.getFullYear();
+  var month = time.getMonth() + 1;
+  var date = time.getDate();
+  var hours = time.getHours();
+  var minutes = time.getMinutes();
+  var seconds = time.getSeconds();
+  return year + '-' + rightTwo(month) + '-' + rightTwo(date) + ' ' + rightTwo(hours) + ':' + rightTwo(minutes) + ':' + rightTwo(seconds);
 });
-Vue.filter('ORDER_STATUS_FILTER',function (value) {
-  for(let i=0,len=ORDER_STATUS.length;i<len;i++){
-    if(value==ORDER_STATUS[i]['id']){
-      return ORDER_STATUS[i]['name']
-    };
-  };
-  return '';
+//手机号 脱敏
+Vue.filter('noPassByMobile',(str)=>{
+  if(null != str && str != undefined){
+    str+="";
+    var pat=/(\d{3})\d*(\d{4})/;
+    return str.replace(pat,'$1****$2');
+  } else {
+    return "";
+  }
 });
-Vue.filter('ORDER_DETAIL_STATUS_FILTER',function (value) {
-  for(let i=0,len=ORDER_DETAIL_STATUS.length;i<len;i++){
-    if(value==ORDER_DETAIL_STATUS[i]['id']){
-      return ORDER_DETAIL_STATUS[i]['name']
-    };
-  };
-  return '';
+//证件号 脱敏
+Vue.filter('noPassByIdCard',(str)=>{
+  if(null != str && str != undefined){
+    str+="";
+    var pat=/(\d{4})\d*(\d{4})/;
+    return str.replace(pat,'$1****$2');
+  } else {
+    return "";
+  }
 });
-Vue.filter('IDENTITY_TYPE_FILTER',function (value) {
-  for(let i=0,len=IDENTITY_TYPE.length;i<len;i++){
-    if(value==IDENTITY_TYPE[i]['id']){
-      return IDENTITY_TYPE[i]['name']
-    };
-  };
-  return '';
-});
-Vue.filter('SERVICE_TYPE_FILTER',function (value) {
-  for(let i=0,len=SERVICE_TYPE.length;i<len;i++){
-    if(value==SERVICE_TYPE[i]['id']){
-      return SERVICE_TYPE[i]['name']
-    };
-  };
-  return '';
-});
-Vue.filter('WORK_STATUS_FILTER',function (value) {
-  for(let i=0,len=WORK_STATUS.length;i<len;i++){
-    if(value==WORK_STATUS[i]['id']){
-      return WORK_STATUS[i]['name']
-    };
-  };
-  return '';
-});
-Vue.filter('SELECT_SERVICE_TYPE_FILTER',function (value) {
-  for(let i=0,len=SELECT_SERVICE_TYPE.length;i<len;i++){
-    if(value==SELECT_SERVICE_TYPE[i]['id']){
-      return SELECT_SERVICE_TYPE[i]['name']
-    };
-  };
-  return '';
+//人名 脱敏
+Vue.filter('noPassByName',(str)=>{
+  if(null != str && str != undefined){
+    str+="";
+    if(str.length <= 3){
+      return "*" + str.substring(1,str.length);
+    } else if(str.length > 3 && str.length <= 6){
+      return "**" + str.substring(2,str.length);
+    } else if(str.length > 6){
+      return str.substring(0,2) + "****" + str.substring(6,str.length)
+    }
+  } else {
+    return "";
+  }
 });
