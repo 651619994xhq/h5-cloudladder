@@ -21,11 +21,13 @@
       <p class="warm-title2 warm-title">实时审核需进行排队</p>
       <p class="warm-title3 warm-title">进入申请流程后请及时填写信息以免资格失效</p>
     </div>
+    <VerificationDialog :isShow="VerificationDialog.isShow" @closeEvent="VerificationDialog.closeEvent"></VerificationDialog>
   </div>
 </template>
 
 <script>
     import NavHeader from '@/common/components/navHeader/index'  //导入公共的title
+    import VerificationDialog from '@/components/verificationDialog/index';
     export default {
         name: "queuing",
         data() {
@@ -33,12 +35,20 @@
                 NavHeader : {
                     title: '借款申请'
                 },
-                productName:'推荐至 助粒贷'
+                productName:'推荐至 助粒贷',
+                VerificationDialog:{
+                    isShow:true,
+                    closeEvent:()=>{
+                        this.VerificationDialog.isShow=false;
+                    }
+
+                }
             }
         },
 //组件
         components: {
             NavHeader,
+            VerificationDialog
         },
         methods: {
         }
