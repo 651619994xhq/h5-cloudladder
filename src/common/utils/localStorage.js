@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 const UserToken='User-Token'; //token
+const backAppUrl='Back-App-Url'; //app url
 export function getToken(){
   if(window.localStorage){
     return  localStorage.getItem(UserToken)||'';
@@ -19,5 +20,27 @@ export function removeToken(){
     localStorage.removeItem(UserToken)
   }else{
     Cookies.remove(UserToken)
+  }
+}
+
+export function getBackAppUrl(){
+  if(window.localStorage){
+    return  localStorage.getItem(backAppUrl)||'';
+  }else{
+    return  Cookies.get(backAppUrl)||'';
+  }
+}
+export function setBackAppUrl(value){
+  if(window.localStorage){
+    localStorage.setItem(backAppUrl,value)
+  }else{
+    Cookies.set(backAppUrl, value)
+  }
+}
+export function removeBackAppUrl(){
+  if(window.localStorage){
+    localStorage.removeItem(backAppUrl)
+  }else{
+    Cookies.remove(backAppUrl)
   }
 }

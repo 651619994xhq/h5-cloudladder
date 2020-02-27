@@ -1,4 +1,4 @@
-import {setToken, removeToken} from '../common/utils/localStorage';
+import {setToken, removeToken,setBackAppUrl,removeBackAppUrl} from '../common/utils/localStorage';
 
 
 export default {
@@ -6,15 +6,19 @@ export default {
     state.transitionName = transitionName
   },
   UPDATE_TOKEN(state, token) {
-    setToken(token)
-    state.token = token;
+
   },
   CLEAR_TOKEN(state) {
-    removeToken();
-    state.token = '';
-    const h5BaseURL = process.env.H5_BASE_URL;
-    // window.location.reload();
-    window.location.href=`${h5BaseURL}/#/enterport?time=${new Date().getTime()}`;
+
   },
+  UPDATE_BACK_APP_URL(state,value){
+    setBackAppUrl(value||'')
+    state.backAppUrl=value||'';
+
+  },
+  CLEAR_BACK_APP_URL(state){
+    removeBackAppUrl();
+    state.backAppUrl='';
+  }
 
 }
