@@ -2,7 +2,7 @@ import awaitWrap from './awaitWrap';
 import axios from './Axios';
 import api from './api';
 
-//任务进程
+//查询任务进程
 export const getTaskProcess =(param={})=>{
   return awaitWrap(axios.post(api.GET_TASK_PROCESS,{}))
 };

@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import store from '@/store/index'
 
 const error = (resolve) => {import('@/pages/error/index').then((module) => {resolve(module)})}; //错误
-const queuing = (resolve) => {import('@/pages/common/queuing/index').then((module) => {resolve(module)})}; //错误
+const index = (resolve) => {import('@/pages/cloudladder/index').then((module) => {resolve(module)})}; //错误
+const queuing = (resolve) => {import('@/pages/common/queuing/index').then((module) => {resolve(module)})}; //排队
 const loanApplication = (resolve) => {import('@/pages/common/loanApplication').then((module) => {resolve(module)})}; //申请页面
 const submitSuccess = (resolve) => {import('@/pages/common/submitSuccess').then((module) => {resolve(module)})}; //提交成功
 const auditFail = (resolve) => {import('@/pages/common/auditFail/index').then((module) => {resolve(module)})}; //审核失败
@@ -24,6 +25,7 @@ let router = new Router({
   },
   routes: [
     {path: '/error', name: 'error', component: error, meta: {title: '暂无数据', index: 1}},
+    {path: '/cloud-ladder-index', name: 'index', component: index, meta: {title: '首页', index: 1}},
     {path: '/queuing', name: 'queuing', component: queuing, meta: {title: '借款申请', index: 1}},
     {path: '/loan-application', name: 'loanApplication', component: loanApplication, meta: {title: '借款申请', index: 1}},
     {path: '/submit-success', name: 'submitSuccess', component: submitSuccess, meta: {title: '提交成功', index: 1}},
