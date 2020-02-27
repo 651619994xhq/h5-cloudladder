@@ -1,25 +1,26 @@
 import Cookies from 'js-cookie'
-const UserToken='User-Token'; //token
+const accessToken='Access-Token'; //token
 const backAppUrl='Back-App-Url'; //app url
-export function getToken(){
+const apiGateway='Api-Gateway'
+export function getAccessToken(){
   if(window.localStorage){
-    return  localStorage.getItem(UserToken)||'';
+    return  localStorage.getItem(accessToken)||'';
   }else{
-    return  Cookies.get(UserToken)||'';
+    return  Cookies.get(accessToken)||'';
   }
 }
-export function setToken(token){
+export function setAccessToken(value){
   if(window.localStorage){
-    localStorage.setItem(UserToken,token)
+    localStorage.setItem(accessToken,value)
   }else{
-    Cookies.set(UserToken, token)
+    Cookies.set(accessToken, value)
   }
 }
-export function removeToken(){
+export function removeAccessToken(){
   if(window.localStorage){
-    localStorage.removeItem(UserToken)
+    localStorage.removeItem(accessToken)
   }else{
-    Cookies.remove(UserToken)
+    Cookies.remove(accessToken)
   }
 }
 
@@ -42,5 +43,27 @@ export function removeBackAppUrl(){
     localStorage.removeItem(backAppUrl)
   }else{
     Cookies.remove(backAppUrl)
+  }
+}
+
+export function getApiGateway(){
+  if(window.localStorage){
+    return  localStorage.getItem(apiGateway)||'';
+  }else{
+    return  Cookies.get(apiGateway)||'';
+  }
+}
+export function setApiGateway(value){
+  if(window.localStorage){
+    localStorage.setItem(apiGateway,value)
+  }else{
+    Cookies.set(apiGateway, value)
+  }
+}
+export function removeApiGateway(){
+  if(window.localStorage){
+    localStorage.removeItem(apiGateway)
+  }else{
+    Cookies.remove(apiGateway)
   }
 }

@@ -6,6 +6,7 @@ import '../filters/index'
 import '@common/vant/index';
 import '@common/utils/fastclick';
 import '@common/native'
+import {getAccessToken,getApiGateway,getBackAppUrl} from "@common/utils/localStorage";
 
 import Vue from 'vue'
 import App from '@/App'
@@ -15,6 +16,15 @@ Vue.config.productionTip = false;
 
 class InitManager {
   static init(){
+    if(getAccessToken()){
+      store.commit('SET_ACCESS_TOKEN',getAccessToken());
+    };
+    if(getApiGateway()){
+      store.commit('SET_API_GATEWAY',getApiGateway());
+    };
+    if(getBackAppUrl()){
+      store.commit('SET_BACK_APP_URL',getBackAppUrl());
+    };
     new Vue({
       el: '#app',
       router,

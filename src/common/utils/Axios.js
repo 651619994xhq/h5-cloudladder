@@ -65,7 +65,6 @@ class Axios {
       return new Promise((resolve, reject)=>{
         this.instance.get(path)
           .then((res)=>{
-            console.log('res==>',res);
             if(res.data.status=='SUCCESS'){
               resolve(res.data.returnData||{});
               return;

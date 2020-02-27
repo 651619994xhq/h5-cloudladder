@@ -6,7 +6,6 @@ import mutations from './mutations' //这里提交一些同步操作
 import actions from './actions'   //这里处理一些异步状态
 import testModule from './modules/testModule'  //这里是一个module模版
 
-
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -19,6 +18,8 @@ const store = new Vuex.Store({
     actions
 
 
-})
+});
+
+
 
 export default store
