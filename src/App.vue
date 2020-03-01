@@ -1,40 +1,27 @@
 <template>
   <div id="app">
     <transition :name="transitionName">
-<!--      <keep-alive >-->
         <router-view v-keep-scroll-position class="child-view"></router-view>
-<!--        <router-view v-keep-scroll-position class="child-view" v-if="$route.meta.keepAlive"></router-view>-->
-<!--        <router-view v-keep-scroll-position  class="child-view" v-if="!$route.meta.keepAlive" :key="'time'+new Date().getTime()"></router-view>-->
-<!--      </keep-alive>-->
-<!--    <router-view v-if="isRouterAlive" class="child-view"></router-view>-->
     </transition>
   </div>
 </template>
-
 <script>
 export default {
-  name: 'App',
-  data(){
-     return {
-       isRouterAlive:true
-     }
-  },
-  computed: {
-    transitionName() {
-      return this.$store.state.transitionName
-    },
-  },
-  provide(){
+  data () {
     return {
-      reload:this.reload
+      transitionName: 'slide-right'// 默认动态路由变化为slide-right
     }
   },
-  methods:{
-    reload(){
-      this.isRouterAlive=false;
-      this.$nextTick(()=>{
-        this.isRouterAlive=true;
-      });
+  watch: {
+    '$route' (to, from) {
+      // 监听路由变化时的状态为前进还是后退
+      let isBack = this.$router.isBack
+      if (isBack) {
+        this.transitionName = 'slide-right'
+      } else {
+        this.transitionName = 'slide-left'
+      }
+      this.$router.isBack = false
     }
   }
 }

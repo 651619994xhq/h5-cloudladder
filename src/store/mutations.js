@@ -2,9 +2,6 @@ import {setAccessToken, removeAccessToken,setBackAppUrl,removeBackAppUrl,setApiG
 
 
 export default {
-  changeTransition(state, transitionName) {
-    state.transitionName = transitionName
-  },
   SET_ACCESS_TOKEN(state, value) {
     setAccessToken(value||'')
     state.accessToken=value||'';

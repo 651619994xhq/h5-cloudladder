@@ -8,74 +8,49 @@
   </div>
 </template>
 <script>
-    export default {
-        name: 'navHeader',
-        // 组件
-        components: {
-
-        },
-        props: {
-            title: {
-                type: String,
-                default: '标题'
-            },
-            noLine: {
-                type: Boolean,
-                default: false
-            },
-            showBackIcon: {
-                type: Boolean,
-                default: true
-            },
-            rightBtnText: {
-                type: String,
-                default: ''
-            },
-            hasLine: {
-                type: Boolean,
-                default: false
-            },
-            selfBack: {
-                // 是否自定义返回时间
-                type: Boolean,
-                default: false
-            },
-            backApp:{
-                type:Boolean,
-                default:false
-            },
-            showCallPerson:{
-                type:Boolean,
-                default:false
-            },
-
-
-        },
-        data() {
-            return {
-
-            }
-        },
-        methods: {
-            back () {
-                if(this.backApp){
-                    //跳到订单页
-                    // if(!Local.getBackPage()){
-                    //     this.$toast('back page is null');
-                    //     return;
-                    // };
-                    // window.location=Local.getBackPage();
-                    // return;
-                };
-                if (this.selfBack) {
-                    // this.$emit('backPage')
-                } else {
-                    this.$router.go(-1)
-                }
-            },
-
-        }
+export default {
+  name: 'navHeader',
+  props: {
+    title: {
+      type: String,
+      default: '标题'
+    },
+    noLine: {
+      type: Boolean,
+      default: false
+    },
+    showBackIcon: {
+      type: Boolean,
+      default: true
+    },
+    rightBtnText: {
+      type: String,
+      default: ''
+    },
+    hasLine: {
+      type: Boolean,
+      default: false
+    },
+    selfBack: {
+      // 是否自定义返回时间
+      type: Boolean,
+      default: false
+    },
+    backApp: {
+      type: Boolean,
+      default: false
+    },
+    showCallPerson: {
+      type: Boolean,
+      default: false
     }
+  },
+  methods: {
+    back () {
+      this.$router.goBack()
+    }
+  }
+}
 </script>
 <style scoped lang="scss">
   .header{
@@ -178,12 +153,9 @@
       line-height: 82px;
     }
   }
-
   .phone-number{
     text-align: center;
     font-size: 32px;
     line-height: 32px;
   }
-
-
 </style>
