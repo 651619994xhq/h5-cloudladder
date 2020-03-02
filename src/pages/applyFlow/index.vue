@@ -27,11 +27,11 @@ export default {
     // 队列查询获取状态
     async getTaskProcessFn () {
       this.$loading({message: '请求中'})
-      let [err, data] = await getTaskProcess({});
+      let [err, data] = await getTaskProcess({})
       if (err !== null) {
-        this.$clear();
-        this.$toast(err || '系统错误');
-        return;
+        this.$clear()
+        this.$toast(err || '系统错误')
+        return false
       }
       // 清除loading
       this.$clear()
