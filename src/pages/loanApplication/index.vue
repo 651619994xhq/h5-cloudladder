@@ -12,7 +12,9 @@
       </div>
     </div>
     <div class="title">补充资料以继续申请</div>
-    <component :is="mapComponent"></component>
+    <component :is="mapComponent"
+               @showMsgDialog="showMsgDialog"
+               @showBankPopup="showBankPopup"/>
     <!--login dialog 组件-->
     <verification-dialog :isShow="loginDialogInfo.isShow"/>
     <!--msg check dialog 组件-->
@@ -22,8 +24,7 @@
       :isShow="myBank.isShow"
       @bankSelectFn="bankSelectFn"
       @bankAddFn="bankAddFn"
-      @bankCancelFn="bankCancelFn"
-    />
+      @bankCancelFn="bankCancelFn"/>
   </div>
 </template>
 <script>
@@ -50,7 +51,7 @@ export default {
     CheckSuccess,
     CheckFailure
   },
-  data () {
+  data() {
     return {
       loginDialogInfo: {
         isShow: false
@@ -69,15 +70,22 @@ export default {
     }
   },
   computed: {
-    mapComponent () {
+    mapComponent() {
       return mapsCom[0]
     }
   },
   methods: {
-    bankSelectFn () {
+    // 显示银行的dialog
+    showBankPopup(){
+      this.myBank.isShow = true
+    },
+
+    // 选择银行
+    bankSelectFn() {
       console.log(123)
     },
-    bankAddFn () {
+    // 添加银行
+    bankAddFn() {
       this.myBank.isShow = false
       setTimeout(() => {
         this.$router.push({
@@ -86,8 +94,13 @@ export default {
       }, 500)
       console.log('新增')
     },
-    bankCancelFn () {
+    // 银行取消
+    bankCancelFn() {
       this.myBank.isShow = false
+    },
+    // 显示短信验证的dialog
+    showMsgDialog() {
+      this.msgCheckInfo.isShow = true
     }
   }
 }
@@ -101,28 +114,35 @@ export default {
     line-height: 78px;
     text-align: center;
   }
+
   .loan-panel {
     background-color: #fff;
     padding: 0px 30px;
+
     .t-right {
       text-align: right;
     }
+
     .loan-term {
       height: 71px;
       line-height: 71px;
+
       .ft24 {
         font-size: 24px;
       }
+
       .co-3 {
         color: #333;
       }
     }
+
     .loan-panel-title {
       font-size: 28px;
       font-weight: 500;
       color: #333;
       padding-top: 25px;
     }
+
     .loan-money {
       color: #0a81fb;
       font-size: 72px;
@@ -136,7 +156,8 @@ export default {
       }
     }
   }
-  .title{
+
+  .title {
     padding: 30px;
   }
 </style>

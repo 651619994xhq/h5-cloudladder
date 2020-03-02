@@ -10,6 +10,8 @@
 <script>
 import Loading from '@/common/components/loading/index'
 import NavHeader from '@/common/components/navHeader/index'
+import {getTaskProcess} from '@utils/service';
+
 export default {
   name: 'applyFlow',
   data () {
@@ -22,6 +24,20 @@ export default {
     Loading
   },
   methods: {
+    // 队列查询获取状态
+    async getTaskProcessFn () {
+      this.$loading({message: '请求中'})
+      let [err, data] = await getTaskProcess({});
+      if (err !== null) {
+        this.$clear();
+        this.$toast(err || '系统错误');
+        return;
+      }
+      // 清除loading
+      this.$clear()
+      // TODO 这里处理正常逻辑
+      console.log('data数据', data)
+    },
     jumpRouter () {
       const routersMap = {
         '1': 'unQueuing',
@@ -38,8 +54,9 @@ export default {
     }
   },
   created () {
+    this.getTaskProcessFn()
     setTimeout(() => {
-      this.jumpRouter()
+      // this.jumpRouter()
     }, 500)
   }
 }

@@ -1,20 +1,20 @@
 <template>
   <ul class="content">
-    <li class="item">
+    <li class="item" @click="showBankPopup">
       <strong class="note">银行卡验证</strong>
-      <p class="status-bar" @click="selectBankFn">
+      <p class="status-bar">
         <span class="status-text">请选择</span>
         <i class="icon-youjiantou iconfont right-arrow"></i>
       </p>
     </li>
-    <li class="item">
+    <li class="item" @click="authApply">
       <strong class="note">身份信息验证</strong>
-      <p class="status-bar" @click="authApply">
+      <p class="status-bar">
         <span class="status-text">请选择</span>
         <i class="icon-youjiantou iconfont right-arrow"></i>
       </p>
     </li>
-    <li class="item">
+    <li class="item" @click="showMsgDialog">
       <strong class="note">申请验证</strong>
       <p class="status-bar">
         <span class="status-text">请选择</span>
@@ -28,14 +28,18 @@
 export default {
   name: 'index',
   methods: {
-    selectBankFn() {
+    showBankPopup () {
       console.log(this.$parent)
-      this.$parent.myBank.isShow = true
+
+      this.$emit('showBankPopup')
     },
-    authApply() {
+    authApply () {
       this.$router.push({
         name: 'identityAuthentication'
       })
+    },
+    showMsgDialog () {
+      this.$emit('showMsgDialog')
     }
   }
 }
