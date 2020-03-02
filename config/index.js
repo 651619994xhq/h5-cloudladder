@@ -12,36 +12,6 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/xhq/test': {
-        // target: 'http://47.96.169.86:8090/aunt-web',  //目标接口域名
-        target: 'https://api.weixin.qq.com',  //目标接口域名
-        // target:'http://fat03-common-task-manager-service.zykj.com/scopeTask/security/token',//中鸿小贷目标接口
-        // target: 'http://10.10.10.22:8082',  //目标接口域名
-        changeOrigin: true,  //是否跨域
-        secure: false,  // 如果是https接口，需要配置这个参数为true
-        pathRewrite: {
-          '^/xhq/test': ''   //重写接口
-        },
-        onProxyReq:(proxyReq,req,res)=>{
-
-        }
-      },
-      '/xhq': {
-        // target: 'http://api.baiming100.com',  //目标接口域名
-        // target: 'https://api.weixin.qq.com',  //目标接口域名
-        // target:'http://fat03-common-task-manager-service.zykj.com/scopeTask/security/token',//中鸿小贷目标接口
-        // target: 'http://10.10.10.22:8082',  //目标接口域名
-        target:'http://39.107.75.210:8090/aunt-web', //目标接口域名
-        changeOrigin: true,  //是否跨域
-        secure: false,  // 如果是https接口，需要配置这个参数为true
-        pathRewrite: {
-          '^/xhq': ''   //重写接口
-        },
-        onProxyReq:(proxyReq,req,res)=>{
-
-        }
-      }
-
     },
     // Various Dev Server settings
     host: IP, // can be overwritten by process.env.HOST

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
+import Router from '@/router/index'
 const baseURL = process.env.BASE_URL
 class Axios {
   constructor(props) {
@@ -23,23 +24,42 @@ class Axios {
   updateProps(props) {
     this.instance.defaults.headers = {...this.instance.defaults.headers, ...props}
   }
+  updateBaseURL(){
+    let url = store.state.apiGateway;
+    if(!url){
+      url = baseURL;
+    };
+    this.instance.defaults.baseURL=url;
+  }
+  redirectTokenPastPage(){
+    store.commit('CLEAR_BACK_APP_URL');
+    store.commit('CLEAR_ACCESS_TOKEN');
+    store.commit('CLEAR_API_GATEWAY');
+    Router.replace('/error');
+  }
   post(path, params) {
     return new Promise((resolve, reject) => {
       console.log('store==>', store)
-      let token = store.state.token ? store.state.token : ''
-      this.instance.post(path, {...params, token}, {headers: {}})
+      let accessToken = store.state.accessToken ? store.state.accessToken : '';
+      this.updateProps({ 'Scope-Authorization' : accessToken}); //xhq 更新token
+      this.updateBaseURL();  //动态替换地址
+      this.instance.post(path, {...params},{headers:{}})
         .then((res) => {
-          console.log('res==>', res)
-          if (res.data.status === 'SUCCESS') {
-            resolve(res.data.returnData || {})
-            return
-          }
-          let $status = res.data.status
-          if ($status === 9999) {
-            store.commit('CLEAR_TOKEN')
-            return
-          }
-          reject(res.data.message || '系统错误');
+          //1.请求正常正常
+          if ( res && res.data && Number(res.data.status) === 0 ) {
+            resolve(res.data.data || {})
+
+            return;
+          };
+
+          //2.token 过期
+          if( res.data.msg == 'token check fail' ) {
+            //TODO 这里重定向 统一 token 过期页面
+            this.redirectTokenPastPage();
+            return;
+          };
+          //3.异常状态
+          reject(res.data.msg || '系统错误') ;
         })
         .catch((e) => {
           let msg = e + ''
