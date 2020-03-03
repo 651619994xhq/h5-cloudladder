@@ -1,7 +1,7 @@
 <!--这是所有页面的入口页，在这个页面进行判断跳转什么的，获取accessToken ,apiGateway 网关-->
 <template>
     <div class="identityAuthentication">
-        <mainTitle :mainTitle="title" :selfBack="true" @backPage="backPage"></mainTitle>
+        <NavHeader :title="title" :selfBack="true" @backPage="backPage"></NavHeader>
         <div class="header-box col flex-item-start flex-justify-start">
             <div class="title">
                 请上传身份证
@@ -96,7 +96,7 @@
         idCardBackInfoNew,
         idCardORC
     } from '@/common/native/index'
-    import mainTitle from '@/common/components/mainTitle/index'  //导入公共的title
+    import NavHeader from '@/common/components/navHeader/index'  //导入公共的title
     import {validIDNumber, validName, validDate, validBirth} from '@/common/utils/idcardValidate' //导入省份证校验规则
     import IdcardComfirm from './idcardComfirm'
     import {API_KEY, API_SECRET} from '@/common/utils/nativeKey'
@@ -137,7 +137,7 @@
         created() {
         },
         components: {
-            mainTitle,
+            NavHeader,
             IdcardComfirm
         },
         methods: {
