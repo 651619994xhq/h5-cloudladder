@@ -10,14 +10,14 @@
           验证手机
         </div>
         <div class="mobile">
-          {{mobile | noPassByMobile}}
+          <input type="input" v-model="mobile" placeholder="请输入手机号"/>
         </div>
       </div>
       <div class="code-box row flex-justify-between flex-item">
         <div class="code-title">
           验证码
         </div>
-        <input type="number" placeholder="请输入验证码">
+        <input type="number" v-model="validCode" placeholder="请输入验证码">
         <div class="get-code-btn">
           <div class="code-btn" v-if="!isGetCode" @click="handleGetCodeEvent">
             获取验证码
@@ -36,20 +36,22 @@
 </template>
 
 <script>
+  import {addBankCard} from '@utils/service'
+
   export default {
-    name: 'privateDialog',
+    name: 'index',
     props: {
       isShow: {
         type: Boolean,
         default: false
       },
-      mobile: {
+      componentCode: {
         type: String,
         default() {
-          return '18614084016'
+          return ''
         }
       },
-      componentCode: {
+      orderNo: {
         type: String,
         default() {
           return ''
@@ -60,7 +62,9 @@
       return {
         isGetCode: false,
         count: 60,
-        timer: null
+        timer: null,
+        mobile: '',
+        validCode: ''
       }
     },
     destroyed() {
@@ -79,10 +83,26 @@
         this.clearTimer();
         this.$emit('closeEvent')
       },
-      handleGetCodeEvent() {
-        this.isGetCode = true;
-
-
+      // 获取验证码
+      async handleGetCodeEvent() {
+        var jsonParams = {
+          mobile: this.mobile
+        }
+        jsonParams = JSON.stringify(jsonParams)
+        const params = {
+          componentCode: this.componentCode,
+          orderNo: this.orderNo,
+          jsonParams
+        }
+        this.$loading({message: '请求中'})
+        let [err, data] = await addBankCard(params)
+        if (err !== null) {
+          this.$clear()
+          this.$toast(err || '系统错误')
+          return false
+        }
+        // 清除loading
+        this.$clear()
         this.startTimer(() => {
           this.isGetCode = false;
         })
@@ -104,13 +124,36 @@
         }
         ;
         this.count = 60;
-
       },
-      handleSubmitEvent() {
+      async handleSubmitEvent() {
         this.$toast('正在提交中');
-      }
+        var jsonParams = {
+          mobile: this.mobile,
+          validCode: this.validCode
 
-    },
+        }
+        jsonParams = JSON.stringify(jsonParams)
+        const params = {
+          componentCode: this.componentCode,
+          orderNo: this.orderNo,
+          jsonParams
+        }
+        this.$loading({message: '请求中'})
+        let [err, data] = await addBankCard(params)
+        if (err !== null) {
+          this.$clear()
+          this.$toast(err || '系统错误')
+          return false
+        }
+        // 清除loading
+        this.$clear()
+        this.startTimer(() => {
+          this.isGetCode = false;
+        })
+      },
+
+
+    }
   }
 </script>
 

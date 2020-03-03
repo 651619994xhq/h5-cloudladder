@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     onConfirm (value, index) {
-      this.$emit('onConfirm', value)
+      this.$emit('onConfirm', index)
     },
     onCancel () {
       this.$emit('onCancel')

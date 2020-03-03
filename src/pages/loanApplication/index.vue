@@ -11,39 +11,29 @@
     </div>
     <div class="title">补充资料以继续申请</div>
     <div class="components-content">
-      <item-check noteText="银行卡验证"
-                  @clickFn="showBankPopup"
-                  :statusText="statusComputed[componentsInfo01.state]"/>
-      <item-check noteText="身份信息验证"
-                  @clickFn="authApply"
-                  :statusText="statusComputed[componentsInfo02.state]"/>
-      <item-check noteText="申请验证"
-                  @clickFn="showBankPopup"
-                  :statusText="statusComputed[componentsInfo03.state]"/>
-    </div>
 
-    <!--login dialog 组件-->
-    <private-dialog
-      :isShow="loginDialogInfo.isShow"
-      :mobile="loginDialogInfo.mobile"
-      :componentCode="loginDialogInfo.componentCode"
-      @closeEvent="closeLoginDialog"
-    />
-    <!--msg check dialog 组件-->
-    <private-dialog :isShow="msgCheckInfo.isShow"/>
-    <!--选择银行卡-->
-    <select-my-bank
-      :isShow="myBank.isShow"
-      :bankList="myBank.bankList"
-      @bankSelectFn="bankSelectFn"
-      @bankAddFn="bankAddFn"
-      @bankCancelFn="bankCancelFn"/>
+      <component
+        :is="mapComponent(item.componentCode)"
+        v-for="(item, index) in componentsList"
+        :key="index"
+        :info="item"
+      ></component>
+
+
+    </div>
   </div>
 </template>
 <script>
   // 请求APP-订单流程-查询 接口
   import NavHeader from '@/common/components/navHeader/index'
-  import {SelectMyBank, ItemCheck, PrivateDialog} from './components'
+  import {
+    SelectMyBank,
+    PrivateDialog,
+    SmsLogin,
+    IdCard,
+    BankCard,
+    SmsVerify
+  } from './components'
   import {
     getProduct,
     getOrderProcess,
@@ -65,94 +55,35 @@
     })
     return obj
   }
-  const statusTextMap = {
-    '0': '请选择',
-    '1': '审核中',
-    '2': '审核成功',
-    '3': '审核失败'
-  }
+
   export default {
     name: 'loanApplication',
     components: {
       NavHeader,
       PrivateDialog,
       SelectMyBank,
-      ItemCheck
+      SmsLogin,
+      IdCard,
+      BankCard,
+      SmsVerify
     },
     data() {
       return {
-        componentsInfo00: {},
-        componentsInfo01: {},
-        componentsInfo02: {},
-        componentsInfo03: {},
         productInfo: {
           name: ''
         },
-        loginDialogInfo: {
-          isShow: false,
-          mobile: ''
-        },
-        msgCheckInfo: {
-          isShow: false
-        },
-        bankInfo: {
-          isShow: true,
-          columns: ['工商银行']
-        },
-        myBank: {
-          isShow: false,
-          bankList: []
-        }
+        componentsList: []
       }
     },
     methods: {
-      statusComputed(status) {
-        return statusTextMap[status]
-      },
-      // 显示银行的dialog
-      showBankPopup() {
-        this.myBank.isShow = true
-      },
-
-      // 选择银行
-      bankSelectFn() {
-        console.log(123)
-      },
-      // 添加银行
-      bankAddFn() {
-        this.myBank.isShow = false
-        setTimeout(() => {
-          this.$router.push({
-            name: 'addBankCard',
-            query: {
-              orderNo: this.componentsInfo01.orderNo
-            }
-          })
-        }, 500)
-        console.log('新增')
-      },
-      // 身份证验证
-      authApply() {
-        this.$router.push({
-          name: 'identityAuthentication'
-        })
-      },
-      // 银行取消
-      bankCancelFn() {
-        this.myBank.isShow = false
-      },
-
-      /***
-       * login
-       */
-      closeLoginDialog() {
-        this.loginDialogInfo.isShow = false
-      },
-
-
-      // 显示短信验证的dialog
-      showMsgDialog() {
-        this.msgCheckInfo.isShow = true
+      mapComponent(componentCode) {
+        const maps = {
+          'sms_login': SmsLogin,
+          'bankcard': BankCard,
+          'idcard': IdCard,
+          'sms_verify': SmsVerify
+        }
+        return maps[componentCode]
       },
       // 获取推荐产品的详情
       async getProductInfoFn() {
@@ -169,10 +100,7 @@
         console.log('data数据', data)
         this.productInfo.name = data.name
       },
-      // 判断是否登录
-      checkIsLogin(state) {
-        this.loginDialogInfo.isShow = state === 0 || state === 3
-      },
+
       // 查询订单流程
       async getOrderProcessFn() {
         this.$loading({message: '请求中'})
@@ -186,38 +114,9 @@
         this.$clear()
         // TODO 这里处理正常逻辑
         console.log('查询订单流程', data)
-        this.componentsInfo00 = data[0]
-        this.componentsInfo01 = data[1]
-        this.componentsInfo02 = data[2]
-        this.componentsInfo03 = data[3]
-        this.loginDialogInfo.mobile = parseString(JSON.parse(data[0].componentValue)).mobile
-        this.loginDialogInfo.componentCode = data[0].componentCode
-
-
-        console.log(this.loginDialogInfo.mobile)
-        console.log('hahhahahhahahhah烦烦烦', parseString(JSON.parse(data[0].componentValue)))
-
-
-
-        this.checkIsLogin(data[0].state)
-
-
-        this.getOrderBankCardFn(data[1].orderNo)
-      },
-      // 获取用户绑定银行卡
-      async getOrderBankCardFn(orderNo) {
-        this.$loading({message: '请求中'})
-        let [err, data] = await getOrderBankCard({orderNo: orderNo})
-        if (err !== null) {
-          this.$clear()
-          this.$toast(err || '系统错误')
-          return false
-        }
-        // 清除loading
-        this.$clear()
-        this.myBank.bankList = data
-        console.log('获取用户绑定银行卡', data)
+        this.componentsList = data
       }
+
     },
     created() {
       this.getProductInfoFn()

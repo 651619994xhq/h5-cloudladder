@@ -14,72 +14,72 @@
             v-for="(item, index) in bankList"
             :key="index"
             :class="index===currentIndex ? 'active' : ''"
-            @click="bankSelectFn(index)">{{item.bankName}}</li>
+            @click="bankSelectFn(index)">{{item.bankName}}
+        </li>
       </ul>
     </div>
   </van-popup>
 </template>
 
 <script>
-export default {
-  name: 'index',
-  data () {
-    return {
-      currentIndex: 0
-    }
-  },
-  props: {
-    isShow: {
-      type: Boolean,
-      default () {
-        return false
+  export default {
+    name: 'index',
+    data() {
+      return {
+        currentIndex: 0
       }
     },
-    bankList: {
-      type: Array,
-      default () {
-        return []
+    props: {
+      isShow: {
+        type: Boolean,
+        default() {
+          return false
+        }
+      },
+      bankList: {
+        type: Array,
+        default() {
+          return []
+        }
       }
-    }
-  },
-
-  methods: {
-    bankSelectFn (index) {
-      this.currentIndex = index
-      this.$emit('bankSelectFn')
     },
-    // 取消
-    bankCancelFn () {
-      this.$emit('bankCancelFn')
-    },
-    // 新增
-    bankAddFn () {
-      this.$emit('bankAddFn')
+    methods: {
+      bankSelectFn(index) {
+        // this.currentIndex = index
+        this.$emit('bankSelectFn', index)
+      },
+      // 取消
+      bankCancelFn() {
+        this.$emit('bankCancelFn')
+      },
+      // 新增
+      bankAddFn() {
+        this.$emit('bankAddFn')
+      }
     }
   }
-}
 </script>
 
 <style scoped lang="scss">
 
-  .popup-content{
+  .popup-content {
     padding: 30px;
-    .popup-title{
+    .popup-title {
       text-align: center;
       font-size: 28px;
       margin-bottom: 20px;
     }
-    .btn-contents{
+    .btn-contents {
       display: flex;
       justify-content: space-between;
       margin-bottom: 20px;
-      .cancel-btn{
+      .cancel-btn {
         background-color: #f6f6f6;
         border: 1px solid #eee;
         padding: 10px 25px;
         border-radius: 4px;
       }
-      .add-btn{
+      .add-btn {
         background-color: #0a81fb;
         border: 1px solid #0a81fb;
         color: #fff;
@@ -88,15 +88,15 @@ export default {
       }
     }
 
-    .bank-content{
-      .list-item{
+    .bank-content {
+      .list-item {
         padding: 20px;
         border: 1px solid #eee;
         margin-bottom: 20px;
         color: #666;
         border-radius: 4px;
-        &.active{
-          border:1px solid #0a81fb;
+        &.active {
+          border: 1px solid #0a81fb;
           background-color: #0a81fb;
           color: #fff;
         }

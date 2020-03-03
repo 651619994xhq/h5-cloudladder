@@ -30,3 +30,10 @@ export const getOrderBankCard = (param = {}) => {
 export const getOrderBankList = (param = {}) => {
   return awaitWrap(axios.post(api.GET_ORDER_BANK_LIST, param))
 }
+
+// 添加银行卡
+export const addBankCard = (param = {}) => {
+  return awaitWrap(axios.post(api.SET_ORDER_PROCESS, param))
+}
+
+

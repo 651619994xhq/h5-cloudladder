@@ -1,8 +1,8 @@
 <template>
   <div class="item" @click="clickFn">
-    <strong class="note">{{noteText}}</strong>
-    <p class="status-bar" :class="cname">
-      <span class="status-text">{{statusText}}</span>
+    <strong class="note">身份认证</strong>
+    <p class="status-bar">
+      <span class="status-text">请选择</span>
       <i class="icon-youjiantou iconfont right-arrow"></i>
     </p>
   </div>
@@ -12,22 +12,10 @@
   export default {
     name: 'index',
     props: {
-      noteText: {
-        type: String,
+      info: {
+        type: Object,
         default() {
-          return ''
-        }
-      },
-      statusText: {
-        type: String,
-        default() {
-          return '请选择'
-        }
-      },
-      cname: {
-        type: String,
-        default() {
-          return ''
+          return {}
         }
       }
     },
