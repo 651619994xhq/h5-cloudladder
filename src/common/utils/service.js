@@ -22,3 +22,11 @@ export const getProduct = (param = {}) => {
 export const uploadIdentityPhotos = (param = {}) => {
   return awaitWrap(axios.post(api.UPLOAD_IDENTITY_PHOTOS, {}))
 }
+// 获取绑定银行卡
+export const getOrderBankCard = (param = {}) => {
+  return awaitWrap(axios.post(api.GET_ORDER_BANK_CARD, param))
+}
+// 获银支持行卡
+export const getOrderBankList = (param = {}) => {
+  return awaitWrap(axios.post(api.GET_ORDER_BANK_LIST, param))
+}

@@ -1,10 +1,8 @@
-import NoSubmit from './noSubmit'
-import SubmitSuccess from './submitSuccess'
-import CheckSuccess from './checkSuccess'
-import CheckFailure from './checkFailure'
+import ItemCheck from './itemCheck'
+import SelectMyBank from './selectMyBank'
+import PrivateDialog from './privateDialog'
 export {
-  NoSubmit,
-  SubmitSuccess,
-  CheckSuccess,
-  CheckFailure
+  ItemCheck,
+  SelectMyBank,
+  PrivateDialog
 }

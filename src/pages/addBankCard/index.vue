@@ -24,92 +24,117 @@
     </div>
     <bank-picker
       :isShow="bankInfo.isShowPicker"
-      :columns="bankInfo.bankList"
+      :columns="bankInfo.columnsBankList"
       @onConfirm="onConfirm"
       @onCancel="onCancel"
     />
   </div>
 </template>
 <script>
-import NavHeader from '@/common/components/navHeader/index'
-import BankPicker from '@/components/bankPicker/index'
-export default {
-  name: 'index',
-  data () {
-    return {
-      bankInfo: {
-        bankName: '请选择',
-        bankNo: '',
-        phoneNo: '',
-        bankList: ['中国银行', '民生银行', '招商银行', '民生银行', '招商银行', '民生银行', '招商银行'],
-        isShowPicker: false
+  import NavHeader from '@/common/components/navHeader/index'
+  import BankPicker from '@/components/bankPicker/index'
+  import {
+    getOrderBankList
+  } from '@utils/service'
+
+  export default {
+    name: 'index',
+    data() {
+      return {
+        bankInfo: {
+          bankName: '请选择',
+          bankNo: '',
+          phoneNo: '',
+          columnsBankList: [],
+          bankList: [],
+          isShowPicker: false
+        }
       }
-    }
-  },
-  components: {
-    NavHeader,
-    BankPicker
-  },
-  methods: {
-    showPickerFn () {
-      this.bankInfo.isShowPicker = true
     },
-    // 点击确定
-    onConfirm (value) {
-      this.bankInfo.bankName = value
-      this.bankInfo.isShowPicker = false
-      console.log('value:', value)
+    components: {
+      NavHeader,
+      BankPicker
     },
-    // 点击取消
-    onCancel () {
-      this.bankInfo.isShowPicker = false
+    methods: {
+      async getOrderBankCardFn(orderNo) {
+        this.$loading({message: '请求中'})
+        let [err, data] = await getOrderBankList({orderNo: orderNo})
+        if (err !== null) {
+          this.$clear()
+          this.$toast(err || '系统错误')
+          return false
+        }
+        // 清除loading
+        this.$clear()
+        this.bankInfo.bankList = data
+        data.forEach((item,index) => {
+
+          this.bankInfo.columnsBankList.push(item.bankName)
+        })
+        console.log('获取用户绑定银行卡', data)
+      },
+      showPickerFn() {
+        this.bankInfo.isShowPicker = true
+      },
+      // 点击确定
+      onConfirm(value) {
+        this.bankInfo.bankName = value
+        this.bankInfo.isShowPicker = false
+        console.log('value:', value)
+      },
+      // 点击取消
+      onCancel() {
+        this.bankInfo.isShowPicker = false
+      },
+      // 点击提交
+      submit() {
+        console.log(77777, this.bankInfo)
+      }
     },
-    // 点击提交
-    submit () {
-      console.log(77777, this.bankInfo)
+    created() {
+      this.getOrderBankCardFn(this.$route.query.orderNo)
     }
   }
-}
 </script>
 <style scoped lang="scss">
-  .page-wrapper{
-    .page-content{
+  .page-wrapper {
+    .page-content {
       padding-top: 20px;
-      .input-panel{
+      .input-panel {
         background-color: #fff;
         margin-bottom: 60px;
-        .item{
+        .item {
           padding: 30px;
           display: flex;
           justify-content: space-between;
           border-bottom: 1px solid #eee;
           align-items: center;
-          .note{
+          .note {
             color: #333333;
             font-size: 26px;
             line-height: 2;
             width: 140px;
           }
-          .add-btn{
+          .add-btn {
             line-height: 2;
             color: #999;
           }
         }
-        .input-item-list{
+        .input-item-list {
           display: flex;
           padding: 30px;
           border-bottom: 1px solid #eee;
           align-items: center;
-          .note{
+          .note {
             color: #333333;
             font-size: 26px;
             line-height: 2;
             margin-right: 20px;
             width: 140px;
           }
-          .input-bar{
+          .input-bar {
             flex: 1;
-            .input{
+            .input {
               display: block;
               width: 100%;
               box-sizing: border-box;
@@ -120,7 +145,7 @@ export default {
           }
         }
       }
-      .confirm-btn{
+      .confirm-btn {
         display: block;
         background-color: #0A81FB;
         border: none;

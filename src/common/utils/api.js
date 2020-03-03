@@ -4,4 +4,6 @@ export default {
   GET_ORDER_PROCESS:'/api/orderProcess/getOrderProcess', //订单流程查询
   GET_PRODUCT:'/api/product/getProduct', //获取产品信息
   UPLOAD_IDENTITY_PHOTOS:'/identity/uploadIdentityPhotos', //上传身份证正返面
+  GET_ORDER_BANK_CARD:'/api/getOrderBankCard', //获取用户已绑定的银行卡
+  GET_ORDER_BANK_LIST:'/api/getOrderBankList', //获取支持的银行卡
 }

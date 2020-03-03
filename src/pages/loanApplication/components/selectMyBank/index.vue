@@ -14,7 +14,7 @@
             v-for="(item, index) in bankList"
             :key="index"
             :class="index===currentIndex ? 'active' : ''"
-            @click="bankSelectFn(index)">{{item}}</li>
+            @click="bankSelectFn(index)">{{item.bankName}}</li>
       </ul>
     </div>
   </van-popup>
@@ -38,7 +38,7 @@ export default {
     bankList: {
       type: Array,
       default () {
-        return ['工商银行', '工商银行', '工商银行', '工商银行', '工商银行']
+        return []
       }
     }
   },

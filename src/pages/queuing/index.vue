@@ -2,7 +2,7 @@
   <div class="page-wrapper">
     <nav-header title="排队中"/>
     <div class="queuing-container">
-      <div class="loan-channel">{{productName}}</div>
+      <div class="loan-channel">{{productInfo.name}}</div>
       <div class="main">
         <div class="gif-container">
           <img src="@image/wait.gif" alt="">
@@ -29,15 +29,40 @@
 
 <script>
 import NavHeader from '@/common/components/navHeader/index'
+import {getProduct} from '@utils/service'
 export default {
   name: 'index',
   data () {
     return {
-      productName: '微粒借贷'
+      productInfo: {
+        name: ''
+      }
     }
   },
   components: {
     NavHeader
+  },
+  methods: {
+    // 获取推荐产品的详情
+    async getProductInfoFn () {
+      this.$loading({message: '请求中'})
+      let [err, data] = await getProduct({})
+      if (err !== null) {
+        this.$clear()
+        this.$toast(err || '系统错误')
+        return false
+      }
+      // 清除loading
+      this.$clear()
+      // TODO 这里处理正常逻辑
+      console.log('data数据', data)
+      this.productInfo.name = data.name
+    }
+  },
+
+  created(){
+
+    this.getProductInfoFn()
   }
 }
 </script>

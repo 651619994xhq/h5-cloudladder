@@ -1,32 +1,38 @@
-import {setAccessToken, removeAccessToken,setBackAppUrl,removeBackAppUrl,setApiGateway,removeApiGateway} from '../common/utils/localStorage';
+import {
+  setAccessToken,
+  removeAccessToken,
+  setBackAppUrl,
+  removeBackAppUrl,
+  setApiGateway,
+  removeApiGateway
+} from '../common/utils/localStorage';
 
 
 export default {
   SET_ACCESS_TOKEN(state, value) {
-    setAccessToken(value||'')
-    state.accessToken=value||'';
+    setAccessToken(value || '')
+    state.accessToken = value || '';
 
   },
   CLEAR_ACCESS_TOKEN(state) {
     removeAccessToken();
-    state.accessToken='';
+    state.accessToken = '';
   },
-  SET_BACK_APP_URL(state,value){
-    setBackAppUrl(value||'')
-    state.backAppUrl=value||'';
+  SET_BACK_APP_URL(state, value) {
+    setBackAppUrl(value || '')
+    state.backAppUrl = value || '';
 
   },
-  CLEAR_BACK_APP_URL(state){
+  CLEAR_BACK_APP_URL(state) {
     removeBackAppUrl();
-    state.backAppUrl='';
+    state.backAppUrl = '';
   },
-  SET_API_GATEWAY(state,value){
-    setApiGateway(value||'')
-    state.apiGateway=value||'';
+  SET_API_GATEWAY(state, value) {
+    setApiGateway(value || '')
+    state.apiGateway = value || '';
   },
-  CLEAR_API_GATEWAY(state){
+  CLEAR_API_GATEWAY(state) {
     removeApiGateway();
-    state.apiGateway='';
+    state.apiGateway = '';
   }
-
 }

@@ -37,21 +37,24 @@
 
 <script>
   export default {
-    name: 'verificationDialog',
+    name: 'privateDialog',
     props: {
       isShow: {
         type: Boolean,
         default: false
       },
-
-
       mobile: {
         type: String,
         default() {
           return '18614084016'
         }
+      },
+      componentCode: {
+        type: String,
+        default() {
+          return ''
+        }
       }
-
     },
     data() {
       return {
@@ -78,6 +81,8 @@
       },
       handleGetCodeEvent() {
         this.isGetCode = true;
+
+
         this.startTimer(() => {
           this.isGetCode = false;
         })

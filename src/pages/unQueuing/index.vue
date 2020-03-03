@@ -3,14 +3,14 @@
     <nav-header title="等待排队"/>
     <div class="page-content">
       <div class="content">
-        <div class="loan-channel">{{productName}}</div>
+        <div class="loan-channel">{{productInfo.name}}</div>
         <div class="desc-content">
           <div class="gif-container">
             <img src="@image/wait.gif" alt="" class="img">
           </div>
           <p class="desc">实时审核需排队，进入排队后请耐心等待...</p>
         </div>
-        <button class="queuing-btn">开始排队</button>
+        <button class="queuing-btn" @click="addTaskProcessFn">开始排队</button>
         <div class="warm-prompt">
           <p class="warm-title1 warm-title">温馨提示:</p>
           <p class="warm-title2 warm-title">实时审核需进行排队</p>
@@ -28,16 +28,55 @@
 <script>
 import Loading from '@/common/components/loading/index'
 import NavHeader from '@/common/components/navHeader/index'
+import {getProduct, addTaskProcess} from '@utils/service'
+import {mapMutations} from 'vuex'
 export default {
   name: 'applyFlow',
   data () {
     return {
-      productName: '微粒借贷'
+      productInfo: {
+        name: ''
+      }
     }
   },
   components: {
     NavHeader,
     Loading
+  },
+  methods: {
+    // 获取推荐产品的详情
+    async getProductInfoFn () {
+      this.$loading({message: '请求中'})
+      let [err, data] = await getProduct({})
+      if (err !== null) {
+        this.$clear()
+        this.$toast(err || '系统错误')
+        return false
+      }
+      // 清除loading
+      this.$clear()
+      // TODO 这里处理正常逻辑
+      console.log('data数据', data)
+      this.productInfo.name = data.name
+    },
+    async addTaskProcessFn () {
+      this.$loading({message: '请求中'})
+      let [err, data] = await addTaskProcess({})
+      if (err !== null) {
+        this.$clear()
+        this.$toast(err || '系统错误')
+        return false
+      }
+      // 清除loading
+      this.$clear()
+
+      this.$toast('加入成功')
+      // TODO 这里处理正常逻辑
+      console.log('data数据', data)
+    }
+  },
+  created () {
+    this.getProductInfoFn()
   }
 }
 </script>
