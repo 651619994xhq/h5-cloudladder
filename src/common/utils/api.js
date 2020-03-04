@@ -7,4 +7,5 @@ export default {
   GET_ORDER_BANK_CARD:'/api/getOrderBankCard', //获取用户已绑定的银行卡
   GET_ORDER_BANK_LIST:'/api/getOrderBankList', //获取支持的银行卡
   SET_ORDER_PROCESS:'/api/setOrderProcess', //添加银行卡
+  SUBMIT_USER_INFO:'/api/order/submitUserInfo' // app提交借款申请
 }

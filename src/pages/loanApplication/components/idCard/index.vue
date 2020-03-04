@@ -21,7 +21,9 @@
     },
     methods: {
       clickFn() {
-        this.$emit('clickFn')
+        this.$router.push({
+          name: 'identityAuthentication'
+        })
       }
     }
   }
@@ -35,7 +37,6 @@
     align-items: center;
     line-height: 2;
     border-bottom: 1px solid #eee;
-
     .note {
       font-size: 28px;
       color: #666;

@@ -20,7 +20,6 @@
 
 <script>
   import PrivateDialog from '../privateDialog'
-
   export default {
     name: 'index',
     components: {
@@ -59,6 +58,12 @@
       statusText() {
         const stateArr = ['请选择', '提交成功', '验证成功', '验证失败']
         return stateArr[this.info.state]
+      },
+      mobile(){
+
+        console.log(66666666666666, this.info.componentValue)
+        console.log('mobile mobile mobile mobile ', JSON.parse(this.info.componentValue).mobile)
+        return JSON.parse(this.info.componentValue).mobile
       }
     },
     methods: {
@@ -68,6 +73,10 @@
       closeEvent() {
         this.isShow = false
       }
+    },
+
+    mounted(){
+      console.log('短信短信', this.info)
     }
   }
 </script>

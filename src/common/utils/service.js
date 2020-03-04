@@ -35,5 +35,10 @@ export const getOrderBankList = (param = {}) => {
 export const addBankCard = (param = {}) => {
   return awaitWrap(axios.post(api.SET_ORDER_PROCESS, param))
 }
+// 提交借款申请
+export const submitUserInfo = (param = {}) => {
+  return awaitWrap(axios.post(api.SUBMIT_USER_INFO, param))
+}
+
 
 

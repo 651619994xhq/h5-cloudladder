@@ -11,16 +11,14 @@
     </div>
     <div class="title">补充资料以继续申请</div>
     <div class="components-content">
-
       <component
         :is="mapComponent(item.componentCode)"
         v-for="(item, index) in componentsList"
         :key="index"
         :info="item"
-      ></component>
-
-
+      />
     </div>
+    <button class="submit-btn" @click="submitUserInfoFn">提交申请借款</button>
   </div>
 </template>
 <script>
@@ -37,24 +35,13 @@
   import {
     getProduct,
     getOrderProcess,
-    getOrderBankCard
+    getOrderBankCard,
+    submitUserInfo
   } from '@utils/service'
 
   // 处理状态\n 0: 未提交; 1: 提交成功; 2: 验证成功; 3: 验证失败
   // 处理字符串
-  function parseString(str) {
-    var str01 = str.replace('{', '')
-    str01 = str01.replace('}', '')
-    var arr = str01.split(',')
-    var obj = {}
-    arr.forEach((item, index) => {
-      var shortArr = item.split(':')
-      var key = shortArr[0].replace("'", '').replace("'", '')
-      var value = shortArr[1].replace("'", '').replace("'", '').trim()
-      obj[key] = value
-    })
-    return obj
-  }
+
 
   export default {
     name: 'loanApplication',
@@ -114,9 +101,31 @@
         this.$clear()
         // TODO 这里处理正常逻辑
         console.log('查询订单流程', data)
-        this.componentsList = data
-      }
+        this.componentsList = data.sort(function (a, b) {
+          return a.processSeq - b.processSeq
+        });
+      },
+      // 提交借款申请
+      async submitUserInfoFn() {
 
+        const params= {
+          orderNo:this.componentsList[0].orderNo
+        }
+        this.$loading({message: '请求中'})
+        let [err, data] = await submitUserInfo(params)
+        if (err !== null) {
+          this.$clear()
+          this.$toast(err || '系统错误')
+          return false
+        }
+        // 清除loading
+        this.$clear()
+        // TODO 这里处理正常逻辑
+        console.log('查询订单流程', data)
+        this.componentsList = data.sort(function (a, b) {
+          return a.processSeq - b.processSeq
+        });
+      }
     },
     created() {
       this.getProductInfoFn()
@@ -159,14 +168,12 @@
       color: #333;
       padding-top: 25px;
     }
-
     .loan-money {
       color: #0a81fb;
       font-size: 72px;
       font-weight: bold;
       margin-top: 36px;
       padding-bottom: 45px;
-
       .loan-yang {
         font-size: 36px;
         font-weight: bold;
@@ -181,5 +188,19 @@
   .components-content {
     background-color: #fff;
     border-top: 1px solid #eee;
+    margin-bottom: 60px;
+  }
+
+  .submit-btn {
+
+    height: 80px;
+    background-color: #0A81FB;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    width: 580px;
+    display: block;
+    margin: 0 auto;
+    font-size: 26px;
   }
 </style>

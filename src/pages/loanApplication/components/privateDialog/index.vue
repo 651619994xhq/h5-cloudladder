@@ -10,7 +10,7 @@
           验证手机
         </div>
         <div class="mobile">
-          <input type="input" v-model="mobile" placeholder="请输入手机号"/>
+          <input type="input" v-model="$parent.mobile" placeholder="请输入手机号" readonly/>
         </div>
       </div>
       <div class="code-box row flex-justify-between flex-item">
@@ -30,7 +30,6 @@
       <div class="submit-verification" @click="handleSubmitEvent">
         提交验证
       </div>
-
     </div>
   </van-popup>
 </template>
@@ -63,12 +62,15 @@
         isGetCode: false,
         count: 60,
         timer: null,
-        mobile: '',
         validCode: ''
       }
     },
     destroyed() {
       this.clearTimer();
+    },
+
+    mounted(){
+      console.log(9999, this.$parent.mobile)
     },
     methods: {
       handleCancelEvent() {
@@ -109,6 +111,7 @@
       },
       // 开始定时器
       startTimer(cb) {
+        this.isGetCode = true
         this.timer = setInterval(() => {
           this.count -= 1;
           if (this.count == 0) {
@@ -128,9 +131,8 @@
       async handleSubmitEvent() {
         this.$toast('正在提交中');
         var jsonParams = {
-          mobile: this.mobile,
+          mobile: this.$parent.mobile,
           validCode: this.validCode
-
         }
         jsonParams = JSON.stringify(jsonParams)
         const params = {
@@ -151,8 +153,6 @@
           this.isGetCode = false;
         })
       },
-
-
     }
   }
 </script>
