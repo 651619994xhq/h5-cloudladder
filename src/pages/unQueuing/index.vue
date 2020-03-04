@@ -3,7 +3,7 @@
     <nav-header title="等待排队"/>
     <div class="page-content">
       <div class="content">
-        <div class="loan-channel">{{productInfo.name}}</div>
+        <div class="loan-channel">推荐至：{{productInfo.name}}</div>
         <div class="desc-content">
           <div class="gif-container">
             <img src="@image/wait.gif" alt="" class="img">
@@ -17,7 +17,7 @@
           <p class="warm-title3 warm-title">进入申请流程后请及时填写信息以免资格失效</p>
         </div>
         <div class="rec-content">
-          <a class="recommend-btn">推荐下一款产品</a>
+          <a class="recommend-btn" @click="recommondNextFn">推荐下一款产品</a>
         </div>
       </div>
 
@@ -28,7 +28,7 @@
 <script>
 import Loading from '@/common/components/loading/index'
 import NavHeader from '@/common/components/navHeader/index'
-import {getProduct, addTaskProcess} from '@utils/service'
+import {getProduct, addTaskProcess, recommondNext} from '@utils/service'
 import {mapMutations} from 'vuex'
 export default {
   name: 'applyFlow',
@@ -73,6 +73,22 @@ export default {
       this.$toast('加入成功')
       // TODO 这里处理正常逻辑
       console.log('data数据', data)
+    },
+    async recommondNextFn () {
+      this.$loading({message: '请求中'})
+      let [err, data] = await recommondNext({})
+      if (err !== null) {
+        this.$clear()
+        this.$toast(err || '系统错误')
+        return false
+      }
+      // 清除loading
+      this.$clear()
+      this.$toast('推荐成功')
+      window.location.href = this.$store.state.backAppUrl
+      // TODO 这里处理正常逻辑
+      console.log('data数据', data)
+      console.log('推荐的哈哈哈', this.$store)
     }
   },
   created () {
@@ -87,6 +103,7 @@ export default {
       .content{
         .loan-channel{
           padding: 30px;
+          text-align: center;
         }
         .desc-content{
           background-color: #fff;
@@ -96,7 +113,7 @@ export default {
             margin: 44px auto 20px;
             width: 240px;
             height: 240px;
-            background: #999999;
+            background: #fff;
             .img {
               display: block;
               width: 100%;

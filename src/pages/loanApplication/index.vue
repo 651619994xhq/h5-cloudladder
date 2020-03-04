@@ -19,6 +19,10 @@
       />
     </div>
     <button class="submit-btn" @click="submitUserInfoFn">提交申请借款</button>
+
+    <div class="rec-content">
+      <a class="recommend-btn" @click="recommondNextFn">推荐下一款产品</a>
+    </div>
   </div>
 </template>
 <script>
@@ -35,7 +39,7 @@
   import {
     getProduct,
     getOrderProcess,
-    getOrderBankCard,
+    recommondNext,
     submitUserInfo
   } from '@utils/service'
 
@@ -128,6 +132,24 @@
           this.$toast('提交失败')
 
         }
+      },
+
+      // 推荐下一款
+      async recommondNextFn () {
+        this.$loading({message: '请求中'})
+        let [err, data] = await recommondNext({})
+        if (err !== null) {
+          this.$clear()
+          this.$toast(err || '系统错误')
+          return false
+        }
+        // 清除loading
+        this.$clear()
+        this.$toast('推荐成功')
+        window.location.href = this.$store.state.backAppUrl
+        // TODO 这里处理正常逻辑
+        console.log('data数据', data)
+        console.log('推荐的哈哈哈', this.$store)
       }
     },
     created() {
@@ -203,7 +225,17 @@
     color: #fff;
     width: 580px;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 50px;
     font-size: 26px;
+  }
+
+  .rec-content{
+    text-align: center;
+    line-height: 2;
+    .recommend-btn{
+      text-decoration:underline;
+      color: #0A81FB;
+      font-size: 28px;
+    }
   }
 </style>

@@ -7,5 +7,7 @@ export default {
   GET_ORDER_BANK_CARD:'/api/getOrderBankCard', //获取用户已绑定的银行卡
   GET_ORDER_BANK_LIST:'/api/getOrderBankList', //获取支持的银行卡
   SET_ORDER_PROCESS:'/api/setOrderProcess', //添加银行卡
-  SUBMIT_USER_INFO:'/api/order/submitUserInfo' // app提交借款申请
+  SUBMIT_USER_INFO:'/api/order/submitUserInfo', // app提交借款申请
+  GET_WAIT_QUEUER:'api/queuer/getWaitQueuer', // 获取排队人数
+  RECOMMEND_NEXT:'api/queuer/recommendNext' // 推荐下一款产品
 }

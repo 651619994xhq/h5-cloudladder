@@ -40,5 +40,15 @@ export const submitUserInfo = (param = {}) => {
   return awaitWrap(axios.post(api.SUBMIT_USER_INFO, param))
 }
 
+// 获取排队人数
+export const getWaitQuener = (param = {}) => {
+  return awaitWrap(axios.post(api.GET_WAIT_QUEUER, param))
+}
+
+// 推荐下一款
+export const recommondNext = (param = {}) => {
+  return awaitWrap(axios.post(api.RECOMMEND_NEXT, param))
+}
+
 
 

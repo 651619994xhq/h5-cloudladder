@@ -2,16 +2,16 @@
   <div class="page-wrapper">
     <nav-header title="排队中"/>
     <div class="queuing-container">
-      <div class="loan-channel">{{productInfo.name}}</div>
+      <div class="loan-channel">推荐至：{{productInfo.name}}</div>
       <div class="main">
         <div class="gif-container">
           <img src="@image/wait.gif" alt="">
         </div>
         <p class="title1">实时审核排队中</p>
         <div class="row flex-item flex-justify wait">
-          <div class="people row">还有<span style="color: #0A81FB;vertical-align: middle">3</span>人</div>
+          <div class="people row">还有<span style="color: #0A81FB;vertical-align: middle">{{waitNum}}</span>人</div>
           <div class="hairline"></div>
-          <div class="time">预计5分钟</div>
+          <div class="time">预计{{waitTime}}分钟</div>
         </div>
         <div class="apply-btn">已加入排队请耐心等待</div>
       </div>
@@ -21,54 +21,93 @@
         <p class="warm-title3 warm-title">进入申请流程后请及时填写信息以免资格失效</p>
       </div>
       <div class="rec-content">
-        <a class="recommend-btn">推荐下一款产品</a>
+        <a class="recommend-btn" @click="recommondNextFn">推荐下一款产品</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import NavHeader from '@/common/components/navHeader/index'
-import {getProduct} from '@utils/service'
-export default {
-  name: 'index',
-  data () {
-    return {
-      productInfo: {
-        name: ''
+  import NavHeader from '@/common/components/navHeader/index'
+  import {getProduct, getWaitQuener, recommondNext} from '@utils/service'
+
+  export default {
+    name: 'index',
+    data() {
+      return {
+        productInfo: {
+          name: ''
+        },
+        waitNum: '0',
+        waitTime: '0'
       }
-    }
-  },
-  components: {
-    NavHeader
-  },
-  methods: {
-    // 获取推荐产品的详情
-    async getProductInfoFn () {
-      this.$loading({message: '请求中'})
-      let [err, data] = await getProduct({})
-      if (err !== null) {
+    },
+    components: {
+      NavHeader
+    },
+    methods: {
+      // 获取推荐产品的详情
+      async getProductInfoFn() {
+        this.$loading({message: '请求中'})
+        let [err, data] = await getProduct({})
+        if (err !== null) {
+          this.$clear()
+          this.$toast(err || '系统错误')
+          return false
+        }
+        // 清除loading
         this.$clear()
-        this.$toast(err || '系统错误')
-        return false
+        // TODO 这里处理正常逻辑
+        console.log('data数据', data)
+        this.productInfo.name = data.name
+      },
+      // 获取排队人数
+      async getWaitQuenerFn() {
+        this.$loading({message: '请求中'})
+        let [err, data] = await getWaitQuener({})
+        if (err !== null) {
+          this.$clear()
+          this.$toast(err || '系统错误')
+          return false
+        }
+        // 清除loading
+        this.$clear()
+        // TODO 这里处理正常逻辑
+        this.waitTime = data.waitTime
+        this.waitNum = data.waitNum
+
+        console.log('人数11111111111111111111111111111111111', data)
+      },
+
+      // 推荐下一款
+      async recommondNextFn () {
+        this.$loading({message: '请求中'})
+        let [err, data] = await recommondNext({})
+        if (err !== null) {
+          this.$clear()
+          this.$toast(err || '系统错误')
+          return false
+        }
+        // 清除loading
+        this.$clear()
+        this.$toast('推荐成功')
+        window.location.href = this.$store.state.backAppUrl
+        // TODO 这里处理正常逻辑
+        console.log('data数据', data)
+        console.log('推荐的哈哈哈', this.$store)
       }
-      // 清除loading
-      this.$clear()
-      // TODO 这里处理正常逻辑
-      console.log('data数据', data)
-      this.productInfo.name = data.name
+
+
+    },
+    created() {
+      this.getProductInfoFn()
+      this.getWaitQuenerFn()
     }
-  },
-
-  created(){
-
-    this.getProductInfoFn()
   }
-}
 </script>
 
 <style scoped lang="scss">
-  .page-wrapper{
+  .page-wrapper {
     .queuing-container {
       overflow: hidden;
       .loan-channel {
@@ -143,11 +182,11 @@ export default {
           color: #666666;
         }
       }
-      .rec-content{
+      .rec-content {
         text-align: center;
         line-height: 2;
-        .recommend-btn{
-          text-decoration:underline;
+        .recommend-btn {
+          text-decoration: underline;
           color: #0A81FB;
           font-size: 28px;
         }
