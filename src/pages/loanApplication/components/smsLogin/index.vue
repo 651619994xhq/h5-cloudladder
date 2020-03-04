@@ -9,10 +9,8 @@
   </div>
 
 </template>
-
 <script>
   import PrivateDialog from '../privateDialog'
-
   export default {
     name: 'index',
     components: {
