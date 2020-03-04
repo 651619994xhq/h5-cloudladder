@@ -2,7 +2,7 @@
   <div class="content">
     <div class="item" @click="clickFn">
       <strong class="note">银行卡</strong>
-      <p class="status-bar">
+      <p class="status-bar" :class="classMap">
         <span class="status-text">{{statusText}}</span>
         <i class="icon-youjiantou iconfont right-arrow"></i>
       </p>
@@ -34,6 +34,10 @@ export default {
     statusText() {
       const stateArr = ['请选择', '提交成功', '验证成功', '验证失败']
       return stateArr[this.info.state]
+    },
+    classMap () {
+      const classArr = ['', 'green', 'green', 'red']
+      return classArr[this.info.state]
     }
   },
   props: {
@@ -120,6 +124,12 @@ export default {
 
     .status-bar {
       color: #999;
+      &.green{
+        color: limegreen;
+      }
+      &.red{
+        color: red;
+      }
       .right-arrow {
         align-self: center;
         padding-top: 4px;

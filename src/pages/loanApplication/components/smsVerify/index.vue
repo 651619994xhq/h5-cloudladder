@@ -3,7 +3,7 @@
 
     <div class="item" @click="clickFn">
       <strong class="note">短信认证</strong>
-      <p class="status-bar">
+      <p class="status-bar" :class="classMap">
         <span class="status-text">{{statusText}}</span>
         <i class="icon-youjiantou iconfont right-arrow"></i>
       </p>
@@ -20,6 +20,7 @@
 
 <script>
   import PrivateDialog from '../privateDialog'
+
   export default {
     name: 'index',
     components: {
@@ -59,8 +60,11 @@
         const stateArr = ['请选择', '提交成功', '验证成功', '验证失败']
         return stateArr[this.info.state]
       },
+      classMap() {
+        const classArr = ['', 'green', 'green', 'red']
+        return classArr[this.info.state]
+      },
       mobile(){
-
         console.log(66666666666666, this.info.componentValue)
         console.log('mobile mobile mobile mobile ', JSON.parse(this.info.componentValue).mobile)
         return JSON.parse(this.info.componentValue).mobile
@@ -75,7 +79,7 @@
       }
     },
 
-    mounted(){
+    mounted() {
       console.log('短信短信', this.info)
     }
   }
@@ -99,6 +103,12 @@
 
     .status-bar {
       color: #999;
+      &.green {
+        color: limegreen;
+      }
+      &.red {
+        color: red;
+      }
       .right-arrow {
         align-self: center;
         padding-top: 4px;

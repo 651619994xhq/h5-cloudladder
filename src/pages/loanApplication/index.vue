@@ -107,9 +107,8 @@
       },
       // 提交借款申请
       async submitUserInfoFn() {
-
-        const params= {
-          orderNo:this.componentsList[0].orderNo
+        const params = {
+          orderNo: this.componentsList[0].orderNo
         }
         this.$loading({message: '请求中'})
         let [err, data] = await submitUserInfo(params)
@@ -121,10 +120,14 @@
         // 清除loading
         this.$clear()
         // TODO 这里处理正常逻辑
-        console.log('查询订单流程', data)
-        this.componentsList = data.sort(function (a, b) {
-          return a.processSeq - b.processSeq
-        });
+        console.log('提交借款申请', data)
+
+        if (data === 1) {
+          this.$toast('提交成功')
+        } else {
+          this.$toast('提交失败')
+
+        }
       }
     },
     created() {
